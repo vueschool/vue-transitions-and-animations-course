@@ -1,18 +1,10 @@
 <template>
-  <Transition name="fade">
+  <Transition
+    enter-active-class="transition-opacity duration-500"
+    leave-active-class="transition-opacity duration-500"
+    enter-from-class="opacity-0"
+    leave-to-class="opacity-0"
+  >
     <slot></slot>
   </Transition>
 </template>
-<style>
-/* Fade */
-.fade-enter-active,
-.fade-leave-active {
-  transform-origin: unset;
-  transition: opacity 0.5s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-</style>

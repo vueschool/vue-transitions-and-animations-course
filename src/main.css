@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#app {
+  @apply p-1;
+}
+
+button {
+  @apply bg-gray-200 rounded border-gray-300 border p-1;
+}
