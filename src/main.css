@@ -7,5 +7,5 @@
 }
 
 button {
-  @apply bg-gray-200 rounded border-gray-300 border p-1;
+  @apply bg-gray-200 rounded border-gray-300 border px-1 text-xs;
 }

@@ -1,21 +1,38 @@
 <script setup>
+import { shuffleArray } from "./helper";
 import { ref } from "vue";
-import "animate.css";
 
-import RubberBandTransition from "@/components/RubberBandTransition.vue";
-const show = ref(true);
+const pokemon = ref([]);
+
+fetch("https://pokeapi.co/api/v2/pokemon?limit=7").then(async (res) => {
+  pokemon.value = (await res.json()).results;
+});
 </script>
 
 <template>
-  <div><button @click="show = !show">Toggle</button></div>
-  <br />
-  <RubberBandTransition>
-    <div v-if="show" class="circle"></div>
-  </RubberBandTransition>
+  <div v-if="pokemon.length">
+    <TransitionGroup tag="ul">
+      <li v-for="(creature, index) in pokemon" :key="creature.name">
+        {{ creature.name }}
+        <button @click="pokemon.splice(index, 1)">X</button>
+      </li>
+    </TransitionGroup>
+    <button @click="shuffleArray(pokemon)">Shuffle</button>
+  </div>
 </template>
 
-<style scoped>
-.circle {
-  @apply w-12 h-12 bg-green-500 rounded-full;
+<style>
+.v-move,
+.v-enter-active,
+.v-leave-active {
+  transition: all 0.5s ease;
+}
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+.v-leave-active {
+  position: absolute;
 }
 </style>
