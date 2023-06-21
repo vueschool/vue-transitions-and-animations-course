@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@vueuse/core": "^10.1.2",
+    "gsap": "^3.12.1",
     "vue": "^3.2.38"
   },
   "devDependencies": {
