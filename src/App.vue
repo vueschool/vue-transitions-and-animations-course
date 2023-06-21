@@ -1,15 +1,17 @@
 <script setup>
 import { ref } from "vue";
-import GsapTransition from "@/components/GsapTransition.vue";
+import "animate.css";
+
+import RubberBandTransition from "@/components/RubberBandTransition.vue";
 const show = ref(true);
 </script>
 
 <template>
   <div><button @click="show = !show">Toggle</button></div>
   <br />
-  <GsapTransition>
+  <RubberBandTransition>
     <div v-if="show" class="circle"></div>
-  </GsapTransition>
+  </RubberBandTransition>
 </template>
 
 <style scoped>
