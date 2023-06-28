@@ -2,5 +2,10 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import "./main.css";
 import { autoAnimatePlugin } from "@formkit/auto-animate/vue";
+import { MotionPlugin } from "@vueuse/motion";
 
-createApp(App).use(autoAnimatePlugin).mount("#app");
+// prettier-ignore
+createApp(App)
+.use(autoAnimatePlugin)
+.use(MotionPlugin)
+.mount("#app");
