@@ -1,63 +1,37 @@
 <script setup>
 import { shuffleArray } from "./helper";
-import { ref, computed } from "vue";
-import gsap from "gsap";
+import { ref } from "vue";
 
-const pokemon = ref([]);
-const search = ref("");
-const matches = computed(() =>
-  pokemon.value.filter((p) =>
-    p.name.toLowerCase().includes(search.value.toLowerCase())
-  )
-);
+// generate random color
+const randomColor = () => {
+  const randomColor = Math.floor(Math.random() * 16777215).toString(16);
+  return "#" + randomColor;
+};
 
-fetch("https://pokeapi.co/api/v2/pokemon?limit=7").then(async (res) => {
-  pokemon.value = (await res.json()).results;
-});
-
-function onBeforeEnter(el) {
-  el.style.opacity = 0;
-  el.style.height = 0;
-}
-
-function onEnter(el, done) {
-  gsap.to(el, {
-    opacity: 1,
-    height: "1.6em",
-    delay: el.dataset.index * 0.1,
-    onComplete: done,
-  });
-}
-
-function onLeave(el, done) {
-  gsap.to(el, {
-    opacity: 0,
-    height: 0,
-    delay: el.dataset.index * 0.1,
-    onComplete: done,
-  });
-}
+const colors = ref(Array.from({ length: 20 }, () => randomColor()));
 </script>
 
 <template>
-  <input type="search" v-model="search" />
-  <div v-if="pokemon.length">
-    <TransitionGroup
-      tag="ul"
-      :css="false"
-      @before-enter="onBeforeEnter"
-      @enter="onEnter"
-      @leave="onLeave"
-    >
-      <li
-        v-for="(creature, index) in matches"
-        :key="creature.name"
-        :data-index="index"
-      >
-        {{ creature.name }}
-        <button @click="pokemon.splice(index, 1)">X</button>
-      </li>
-    </TransitionGroup>
-    <button @click="shuffleArray(pokemon)">Shuffle</button>
+  <button class="w-full text-lg" @click="shuffleArray(colors)">Shuffle</button>
+  <div class="flex flex-wrap" v-auto-animate>
+    <div
+      class="box"
+      v-for="(color, i) in colors"
+      @click="colors.splice(i, 1)"
+      :key="color"
+      :style="{ backgroundColor: color }"
+    ></div>
   </div>
 </template>
+
+<style>
+.box {
+  width: 100px;
+  height: 100px;
+  border: 1px solid black;
+  margin: 5px;
+}
+button {
+  background-color: blue;
+}
+</style>
